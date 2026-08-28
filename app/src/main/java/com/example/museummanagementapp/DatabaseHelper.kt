@@ -33,4 +33,22 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, "MuseumDB.db"
         val db = this.readableDatabase
         return db.rawQuery("SELECT * FROM exhibits", null)
     }
+
+    // UPDATE
+    fun updateExhibit(id: String, name: String, category: String, price: String): Boolean {
+        val db = this.writableDatabase
+        val contentValues = ContentValues().apply {
+            put("name", name)
+            put("category", category)
+            put("price", price)
+        }
+        val result = db.update("exhibits", contentValues, "id = ?", arrayOf(id))
+        return result > 0
+    }
+
+    // DELETE
+    fun deleteExhibit(id: String): Int {
+        val db = this.writableDatabase
+        return db.delete("exhibits", "id = ?", arrayOf(id))
+    }
 }
