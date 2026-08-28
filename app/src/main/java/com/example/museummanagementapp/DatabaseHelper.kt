@@ -2,6 +2,7 @@ package com.example.museummanagementapp
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
@@ -25,5 +26,11 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, "MuseumDB.db"
         }
         val result = db.insert("exhibits", null, contentValues)
         return result != -1L
+    }
+
+    // READ (View)
+    fun getAllExhibits(): Cursor {
+        val db = this.readableDatabase
+        return db.rawQuery("SELECT * FROM exhibits", null)
     }
 }
